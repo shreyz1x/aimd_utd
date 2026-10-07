@@ -46,9 +46,7 @@ export default function ContactPage() {
 
       <section className="pt-32 pb-16 px-4 md:px-8">
         <h1 className="font-aileron text-[12vw] md:text-[8vw] leading-[0.85] uppercase tracking-tighter">
-          Let&apos;s
-          <br />
-          <span className="text-primary">Talk</span>
+          Let&apos;s <span className="text-primary">Talk</span>
         </h1>
         <p className="font-baskerville text-muted-foreground mt-8 max-w-xl">
           Questions about joining, applying, or partnering with AIMD? Send a note and we&apos;ll get back to you.

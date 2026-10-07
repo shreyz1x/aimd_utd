@@ -1,49 +1,46 @@
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
-
-const team = [
-  { name: "Zaina Ali", role: "President" },
-  { name: "Rakshitha Kishore", role: "Vice-President" },
-  { name: "Jaden Jovan", role: "Director of Technology" },
-  { name: "Srinidhi Vajinepali", role: "Director of Operations" },
-  { name: "Noman Ibrahim", role: "Director of Marketing" },
-  { name: "Akshith Akula", role: "Director of Industry" },
-  { name: "Arnav Mehta", role: "Director of Engineering" },
-]
+import { TeamGrid } from "@/components/team-grid"
+import { CircularCarousel } from "@/components/ui/circular-carousel"
 
 const domains = [
   {
+    id: "machine-learning",
+    tag: "ML",
     title: "Machine Learning",
     description: "Model training, evaluation, optimization, and real-world datasets.",
   },
   {
+    id: "computer-vision",
+    tag: "Imaging",
     title: "Computer Vision & Medical Imaging",
     description: "Image-based diagnostics, detection models, and visual reasoning.",
   },
   {
+    id: "llms-agents",
+    tag: "LLMs",
     title: "Large Language Models & AI Agents",
     description: "LLMs, prompt engineering, RAG systems, and autonomous agents.",
   },
   {
+    id: "healthcare-ai",
+    tag: "Healthcare",
     title: "Healthcare & Diagnostic AI",
     description: "AI for patient intake, triage, decision support, and workflows.",
   },
   {
+    id: "full-stack",
+    tag: "Systems",
     title: "Full-Stack AI Systems",
     description: "AI + backend + frontend + deployment.",
   },
   {
+    id: "research-ethics",
+    tag: "Ethics",
     title: "Research, Ethics & Model Evaluation",
     description: "Bias, interpretability, safety, and responsible AI.",
   },
 ]
-
-function initials(name: string) {
-  return name
-    .split(" ")
-    .map((part) => part[0])
-    .join("")
-}
 
 export default function AboutPage() {
   return (
@@ -52,9 +49,7 @@ export default function AboutPage() {
 
       <section className="pt-32 pb-16 px-4 md:px-8">
         <h1 className="font-aileron text-[12vw] md:text-[8vw] leading-[0.85] uppercase tracking-tighter">
-          About
-          <br />
-          <span className="text-primary">Us</span>
+          About <span className="text-primary">Us</span>
         </h1>
       </section>
 
@@ -99,35 +94,20 @@ export default function AboutPage() {
 
       <section className="px-4 md:px-8 pb-24">
         <h2 className="font-aileron text-4xl md:text-6xl uppercase tracking-tight mb-12">The Team</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {team.map((member) => (
-            <div key={member.name} className="group bg-card">
-              <div className="aspect-square overflow-hidden border-2 border-border bg-aimd-black flex items-center justify-center">
-                <span className="font-aileron text-4xl text-primary">{initials(member.name)}</span>
-              </div>
-              <div className="mt-4">
-                <h3 className="font-aileron text-xl uppercase">{member.name}</h3>
-                <p className="font-baskerville text-xs text-primary uppercase">{member.role}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        <TeamGrid />
       </section>
 
       <section className="px-4 md:px-8 pb-24">
-        <div className="bg-card text-foreground border-2 border-aimd-purple/40 p-8 md:p-16">
-          <h2 className="font-aileron text-4xl md:text-6xl uppercase tracking-tight">What AIMD Works On</h2>
-          <p className="font-baskerville text-muted-foreground mt-4 max-w-xl">
-            The AI domains our members actively build, research, and deploy in.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-            {domains.map((domain) => (
-              <div key={domain.title}>
-                <h3 className="font-aileron text-2xl text-primary uppercase">{domain.title}</h3>
-                <p className="font-baskerville text-sm mt-4 opacity-70">{domain.description}</p>
-              </div>
-            ))}
+        <div className="overflow-hidden rounded-3xl border border-aimd-purple/30 bg-[radial-gradient(ellipse_at_center,rgba(151,21,169,0.18),transparent_70%)] px-4 py-12 md:py-16">
+          <div className="text-center">
+            <h2 className="font-aileron text-4xl md:text-6xl uppercase tracking-tight">
+              What <span className="text-primary">AIMD</span> Works On
+            </h2>
+            <p className="font-baskerville text-muted-foreground mt-4 max-w-xl mx-auto">
+              The AI domains our members actively build, research, and deploy in.
+            </p>
           </div>
+          <CircularCarousel items={domains} radiusX={470} radiusY={45} className="mt-16" />
         </div>
       </section>
 

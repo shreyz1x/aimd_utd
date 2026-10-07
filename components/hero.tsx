@@ -15,9 +15,11 @@ export function Hero() {
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: "circOut" }}
-            className="font-aileron text-[16vw] md:text-[14vw] leading-[0.85] font-black tracking-tighter text-primary text-center drop-shadow-[0_0_35px_rgba(151,21,169,0.7)]"
+            className="font-aileron text-[9vw] md:text-[7vw] leading-[0.95] font-black tracking-tighter text-primary text-center drop-shadow-[0_0_35px_rgba(151,21,169,0.7)]"
           >
-            &ldquo;AI in MD.&rdquo;
+            &ldquo;Bridging the Gap
+            <br />
+            Between AI and Medicine&rdquo;
           </motion.h1>
         </div>
 

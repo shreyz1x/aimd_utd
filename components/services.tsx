@@ -5,7 +5,7 @@ import { ServiceCard } from "./service-card"
 
 const services = [
   {
-    title: "AIMD Projects",
+    title: "AIMD Research",
     description:
       "Work on open-ended AI prompts and challenges designed by AIMD. Build innovative applications that combine machine learning and medicine — from diagnostic tools to research automation.",
     tags: ["Machine Learning", "Medicine", "Research"],
@@ -21,12 +21,13 @@ const services = [
     description:
       "Lead AIMD's vision, manage events and partnerships, and guide our members. Officers shape the direction of the club and help expand the reach of AI in medicine and diagnostics.",
     tags: ["Leadership", "Events", "Partnerships"],
+    closedNote: "Fall 2026 officer team has been selected",
   },
 ]
 
 export function Services() {
   return (
-    <section className="bg-background min-h-screen py-32 relative">
+    <section className="bg-background pt-32 pb-8 relative">
       <div className="container mx-auto px-4 mb-20 flex items-end justify-between">
         <h2 className="font-aileron text-[8vw] md:text-[6vw] leading-none text-aimd-white uppercase font-black">
           Ways to
@@ -38,7 +39,14 @@ export function Services() {
 
       <div className="flex flex-col">
         {services.map((s, i) => (
-          <ServiceCard key={i} number={`0${i + 1}`} title={s.title} description={s.description} tags={s.tags} />
+          <ServiceCard
+            key={i}
+            number={`0${i + 1}`}
+            title={s.title}
+            description={s.description}
+            tags={s.tags}
+            closedNote={s.closedNote}
+          />
         ))}
       </div>
     </section>
