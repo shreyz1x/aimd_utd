@@ -48,9 +48,9 @@ export function HomeGallery() {
         </ContainerAnimated>
 
         <ContainerAnimated className="my-4">
-          <p className="mx-auto max-w-5xl leading-normal tracking-tight text-muted-foreground">
-            AIMD is a student organization at The University of Texas at Dallas focused on artificial intelligence,
-            machine learning, technical projects, workshops, competitions, and industry connections.
+          <p className="mx-auto max-w-xl leading-normal tracking-tight text-muted-foreground">
+            Learn, build, and grow with a community of students passionate about artificial intelligence, machine
+            learning, and emerging technology.
           </p>
         </ContainerAnimated>
 
