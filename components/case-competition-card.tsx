@@ -42,7 +42,7 @@ export function CaseCompetitionCard({
         title="AIMD Premier Case Competition"
         dateRange="Oct 18 – Oct 25, 2026"
         dateLabel="Registration Deadline: 10/19/2026"
-        teamSize="Team Size: 2–5 Students"
+        teamSize="Team Size: 3–5 Students"
         countdownLabel="Next Deadline"
         countdownTitle="Registration closes in"
         closedLabel="Registration is closed"
@@ -63,7 +63,7 @@ export function CaseCompetitionCard({
               Competition <span className="text-primary">Timeline</span>
             </DialogTitle>
             <DialogDescription className="font-baskerville text-white/60">
-              Oct 18 – Oct 25, 2026 · Teams of 2–5 students
+              Oct 18 – Oct 25, 2026 · Teams of 3–5 students
             </DialogDescription>
           </DialogHeader>
 

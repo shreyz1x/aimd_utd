@@ -25,10 +25,43 @@ const libreBaskerville = Libre_Baskerville({
   display: "swap",
 })
 
+const siteUrl = "https://www.aimdutd.org"
+
 export const metadata: Metadata = {
-  title: "AIMD | Artificial Intelligence in Medicine",
-  description: "AIMD at UT Dallas brings students together to work on artificial intelligence and healthcare.",
-  generator: "v0.app",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "AIMD at UT Dallas | Artificial Intelligence & Machine Learning",
+    template: "%s | AIMD at UT Dallas",
+  },
+  description:
+    "AIMD at UT Dallas is a student organization focused on artificial intelligence, machine learning, technical projects, workshops, competitions, events, and industry connections.",
+  applicationName: "AIMD at UT Dallas",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    url: siteUrl,
+    siteName: "AIMD at UT Dallas",
+    title: "AIMD at UT Dallas | Artificial Intelligence & Machine Learning",
+    description:
+      "AIMD at UT Dallas is a student organization focused on artificial intelligence, machine learning, technical projects, workshops, competitions, events, and industry connections.",
+    images: [
+      {
+        url: "/aimd-logo.png",
+        width: 1024,
+        height: 394,
+        alt: "AIMD at UT Dallas logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AIMD at UT Dallas | Artificial Intelligence & Machine Learning",
+    description:
+      "AIMD at UT Dallas is a student organization focused on artificial intelligence, machine learning, technical projects, workshops, competitions, events, and industry connections.",
+    images: ["/aimd-logo.png"],
+  },
   icons: {
     icon: [
       { url: "/aimd-icon-32.png", sizes: "32x32", type: "image/png" },
@@ -36,6 +69,21 @@ export const metadata: Metadata = {
     ],
     apple: "/aimd-apple-icon.png",
   },
+}
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "AIMD at UT Dallas",
+  alternateName: ["AIMD UTD", "AIMD UT Dallas", "UTD AIMD"],
+  url: siteUrl,
+  logo: `${siteUrl}/aimd-logo.png`,
+  description:
+    "A student organization at The University of Texas at Dallas focused on artificial intelligence and machine learning.",
+  sameAs: [
+    "https://www.instagram.com/aimd_utd",
+    "https://www.linkedin.com/company/aimdutd/",
+  ],
 }
 
 export default function RootLayout({
@@ -46,6 +94,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${aileron.variable} ${libreBaskerville.variable}`}>
       <body className="font-sans antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         {children}
         <Analytics />
       </body>

@@ -1,9 +1,17 @@
+import type { Metadata } from "next"
 import { Navbar } from "@/components/navbar"
 import { HomeGallery } from "@/components/home-gallery"
 import { MarqueeSection } from "@/components/marquee-section"
 import { Services } from "@/components/services"
 import { CaseCompetitionCard } from "@/components/case-competition-card"
 import { Footer } from "@/components/footer"
+
+export const metadata: Metadata = {
+  title: {
+    absolute: "AIMD at UT Dallas | Artificial Intelligence & Machine Learning",
+  },
+  alternates: { canonical: "/" },
+}
 
 export default function Page() {
   return (

@@ -1,8 +1,16 @@
+import type { Metadata } from "next"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ArrowUpRight } from "lucide-react"
 import Link from "next/link"
 import { projects } from "@/lib/projects"
+
+export const metadata: Metadata = {
+  title: "Research",
+  description:
+    "Explore AIMD research and AI projects at UT Dallas, including healthcare AI, custom AI systems, and intelligent agents.",
+  alternates: { canonical: "/projects" },
+}
 
 export default function ProjectsPage() {
   return (

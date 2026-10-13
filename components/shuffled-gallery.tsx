@@ -50,7 +50,7 @@ export function ShuffledGallery({ images }: { images: string[] }) {
               key={imageUrl}
               className="aspect-video block h-auto max-h-full w-full rounded-md object-cover shadow"
               src={imageUrl}
-              alt="AIMD event photo"
+              alt="AIMD at UT Dallas club event"
             />
           ))}
         </GalleryCol>

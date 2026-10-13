@@ -1,7 +1,15 @@
+import type { Metadata } from "next"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { TeamGrid } from "@/components/team-grid"
 import { CircularCarousel } from "@/components/ui/circular-carousel"
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Learn about AIMD at UT Dallas, a student organization focused on artificial intelligence, machine learning, and healthcare projects.",
+  alternates: { canonical: "/about" },
+}
 
 const domains = [
   {

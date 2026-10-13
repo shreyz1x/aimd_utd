@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { getProject, projects } from "@/lib/projects"
@@ -6,6 +7,25 @@ import { notFound } from "next/navigation"
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }))
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const project = getProject(slug)
+
+  if (!project) {
+    return { title: "Project" }
+  }
+
+  return {
+    title: project.title,
+    description: project.summary,
+    alternates: { canonical: `/projects/${project.slug}` },
+  }
 }
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {

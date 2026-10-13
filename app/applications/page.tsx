@@ -1,9 +1,17 @@
+import type { Metadata } from "next"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ArrowRight } from "lucide-react"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import { CaseCompetitionCard } from "@/components/case-competition-card"
 import { cn } from "@/lib/utils"
+
+export const metadata: Metadata = {
+  title: "Applications",
+  description:
+    "Apply to AIMD at UT Dallas, join projects, or get involved with the AI and machine learning student organization.",
+  alternates: { canonical: "/applications" },
+}
 
 const applications = [
   {

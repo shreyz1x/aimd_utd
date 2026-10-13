@@ -18,7 +18,7 @@ export function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-4 md:px-8">
       <Link href="/" className="flex items-center gap-2">
-        <img src="/aimd-logo.png" alt="AIMD" className="h-9 md:h-11 w-auto" />
+        <img src="/aimd-logo.png" alt="AIMD at UT Dallas" className="h-9 md:h-11 w-auto" />
       </Link>
 
       <div className="hidden md:flex items-center gap-1 lg:gap-2 bg-aimd-surface/80 p-2 rounded-full backdrop-blur-sm border border-white/10">
