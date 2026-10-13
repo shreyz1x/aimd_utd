@@ -49,7 +49,7 @@ export function CaseCompetitionCard({
         targetDate={REGISTRATION_DEADLINE}
         imageUrl="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1200&q=80"
         imageAlt="Students presenting at a competition"
-        primaryAction={{ label: "Register Now", href: "https://forms.gle/LeY9w16rEpHorqe77" }}
+        primaryAction={{ label: "Register Now", href: "https://docs.google.com/forms/d/e/1FAIpQLSdrmHCBq0MLWjcuCl84Hf0kQvrxZUhn2xWNRXCe4pdCqvQdaQ/viewform" }}
         secondaryAction={{ label: "View Details", onClick: () => setOpen(true) }}
       />
 
