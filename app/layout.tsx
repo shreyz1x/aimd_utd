@@ -63,9 +63,13 @@ export const metadata: Metadata = {
     images: ["/aimd-logo.png"],
   },
   icons: {
+    // Google Search needs a square favicon that is a multiple of 48px.
     icon: [
-      { url: "/aimd-icon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/aimd-icon-48.png", sizes: "48x48", type: "image/png" },
+      { url: "/aimd-icon-96.png", sizes: "96x96", type: "image/png" },
       { url: "/aimd-icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/aimd-icon-32.png", sizes: "32x32", type: "image/png" },
     ],
     apple: "/aimd-apple-icon.png",
   },
