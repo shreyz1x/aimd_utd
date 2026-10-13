@@ -32,11 +32,6 @@ export function HomeGallery() {
     <div className="relative bg-background">
       <ContainerStagger className="relative z-40 -mb-12 place-self-center px-6 pt-32 text-center">
         <ContainerAnimated>
-          <p className="font-aileron text-xs md:text-sm uppercase tracking-[0.25em] text-primary mb-4">
-            AIMD at UT Dallas
-          </p>
-        </ContainerAnimated>
-        <ContainerAnimated>
           <p className="font-aileron text-sm md:text-base uppercase tracking-[0.15em] text-foreground/70 mb-6">
             Artificial Intelligence &amp; Machine Learning
           </p>
@@ -44,13 +39,16 @@ export function HomeGallery() {
         <ContainerAnimated>
           <h1 className="font-serif text-4xl font-extralight text-foreground md:text-5xl">
             &ldquo;Bridging the <span className="font-serif font-extralight text-primary">Gap</span>
-            <br />
-            Between AI and Medicine&rdquo;
           </h1>
+        </ContainerAnimated>
+        <ContainerAnimated>
+          <p className="font-serif text-4xl font-extralight text-foreground md:text-5xl">
+            Between AI and Medicine&rdquo;
+          </p>
         </ContainerAnimated>
 
         <ContainerAnimated className="my-4">
-          <p className="mx-auto max-w-xl leading-normal tracking-tight text-muted-foreground">
+          <p className="mx-auto max-w-5xl leading-normal tracking-tight text-muted-foreground">
             AIMD is a student organization at The University of Texas at Dallas focused on artificial intelligence,
             machine learning, technical projects, workshops, competitions, and industry connections.
           </p>
