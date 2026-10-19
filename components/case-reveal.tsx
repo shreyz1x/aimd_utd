@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { motion, useReducedMotion } from "framer-motion"
-import { Calendar, Clock, Download, ExternalLink, Eye, FileText, Lock, Trophy, X } from "lucide-react"
+import { Calendar, Clock, Download, ExternalLink, Eye, FileText, Lock, Mail, Trophy, X } from "lucide-react"
 
 import {
   CountdownUnits,
@@ -22,6 +22,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import {
+  CASE_CONTACT_EMAIL,
   CASE_DETAILS,
   CASE_PDF_DOWNLOAD_PATH,
   CASE_PDF_FILENAME,
@@ -124,6 +125,7 @@ export function CaseRevealCard({
                 <EventInfoRow icon={Calendar}>Released {CASE_RELEASE_LABEL}</EventInfoRow>
                 <EventInfoRow icon={Clock}>Preliminary Submission: {CASE_DETAILS.preliminaryDeadline}</EventInfoRow>
                 <EventInfoRow icon={Trophy}>Semifinalists Oct 24 · Finals Oct 25 (in person)</EventInfoRow>
+                <CaseContactRow />
               </div>
 
               <div className="rounded-2xl border border-white/10 bg-aimd-black/60 p-4">
@@ -172,6 +174,7 @@ export function CaseRevealCard({
                 <EventInfoRow icon={Calendar}>Release: {CASE_RELEASE_LABEL}</EventInfoRow>
                 <EventInfoRow icon={Clock}>Preliminary Submission: {CASE_DETAILS.preliminaryDeadline}</EventInfoRow>
                 <EventInfoRow icon={FileText}>Official case document unlocks here at release</EventInfoRow>
+                <CaseContactRow />
               </div>
 
               <div className="rounded-2xl border border-white/10 bg-aimd-black/60 p-4">
@@ -192,6 +195,22 @@ export function CaseRevealCard({
 
       {released && <CasePreviewDialog open={previewOpen} onOpenChange={setPreviewOpen} />}
     </>
+  )
+}
+
+function CaseContactRow() {
+  return (
+    <EventInfoRow icon={Mail}>
+      <span>
+        Questions?{" "}
+        <a
+          href={`mailto:${CASE_CONTACT_EMAIL}`}
+          className="break-all text-primary underline-offset-4 hover:underline focus-visible:underline"
+        >
+          {CASE_CONTACT_EMAIL}
+        </a>
+      </span>
+    </EventInfoRow>
   )
 }
 

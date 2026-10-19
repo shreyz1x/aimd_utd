@@ -8,6 +8,8 @@ export const CASE_TITLE =
 
 // Lives outside /public so the file can only be reached through the release-gated API route.
 export const CASE_PDF_FILENAME = "UTD_AIMD_Case_Document_2026_v2.pdf"
+
+export const CASE_CONTACT_EMAIL = "zaina.ali@utdallas.edu"
 export const CASE_PDF_PATH = "/api/case-document"
 export const CASE_PDF_DOWNLOAD_PATH = "/api/case-document?download=1"
 
