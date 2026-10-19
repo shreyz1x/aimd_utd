@@ -4,7 +4,9 @@ import { Footer } from "@/components/footer"
 import { ArrowRight } from "lucide-react"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import { CaseCompetitionCard } from "@/components/case-competition-card"
+import { CaseRevealCard } from "@/components/case-reveal"
 import { cn } from "@/lib/utils"
+import { isCaseReleased } from "@/lib/case-competition"
 
 export const metadata: Metadata = {
   title: "Applications",
@@ -65,6 +67,9 @@ export default function ApplicationsPage() {
           <CarouselContent className="-ml-6">
             <CarouselItem className="pl-6 md:basis-1/2 lg:basis-1/3">
               <CaseCompetitionCard className="h-full" />
+            </CarouselItem>
+            <CarouselItem className="pl-6 md:basis-1/2 lg:basis-1/3">
+              <CaseRevealCard className="h-full" initialReleased={isCaseReleased()} />
             </CarouselItem>
             {applications.map((application) => (
               <CarouselItem key={application.number} className="pl-6 md:basis-1/2 lg:basis-1/3">

@@ -50,8 +50,7 @@ export function CaseCompetitionCard({
         imageUrl="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1200&q=80"
         imageAlt="Students presenting at a competition"
         primaryAction={{ label: "Register Now", href: "https://docs.google.com/forms/d/e/1FAIpQLSdrmHCBq0MLWjcuCl84Hf0kQvrxZUhn2xWNRXCe4pdCqvQdaQ/viewform" }}
-        secondaryAction={{ label: "View Details", onClick: () => setOpen(true) }}
-      />
+        secondaryAction={{ label: "View Details", onClick: () => setOpen(true) }}      />
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="border-aimd-purple/40 bg-aimd-surface text-aimd-white sm:max-w-5xl p-6 md:p-10">

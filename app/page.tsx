@@ -4,7 +4,9 @@ import { HomeGallery } from "@/components/home-gallery"
 import { MarqueeSection } from "@/components/marquee-section"
 import { Services } from "@/components/services"
 import { CaseCompetitionCard } from "@/components/case-competition-card"
+import { CaseRevealCard } from "@/components/case-reveal"
 import { Footer } from "@/components/footer"
+import { isCaseReleased } from "@/lib/case-competition"
 
 export const metadata: Metadata = {
   title: {
@@ -21,6 +23,7 @@ export default function Page() {
       <MarqueeSection />
       <section className="px-4 md:px-8 pt-24">
         <CaseCompetitionCard layout="wide" />
+        <CaseRevealCard layout="wide" initialReleased={isCaseReleased()} className="mt-10" />
       </section>
       <Services />
       <Footer showCta />

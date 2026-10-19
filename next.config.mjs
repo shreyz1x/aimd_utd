@@ -7,6 +7,9 @@ const nextConfig = {
       { source: "/services", destination: "/applications", permanent: false },
     ]
   },
+  outputFileTracingIncludes: {
+    "/api/case-document": ["./content/case/**/*"],
+  },
   typescript: {
     ignoreBuildErrors: true,
   },
