@@ -8,6 +8,11 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 // 11:59 PM Central (CDT) at UT Dallas.
 const REGISTRATION_DEADLINE = new Date("2026-10-19T23:59:00-05:00")
 
+const REGISTRATION_FORM_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSdrmHCBq0MLWjcuCl84Hf0kQvrxZUhn2xWNRXCe4pdCqvQdaQ/viewform"
+const SUBMISSION_FORM_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLScHI2GXqiZ_Sl30p2p1RYoktmsAIDtYhyvtIeVgbUi2_3IiuA/viewform?usp=sharing&ouid=106588592283588816593"
+
 const timeline = [
   { date: "Oct 18", title: "Case Released", description: "Teams receive the official competition case." },
   { date: "Oct 19", title: "Registration Deadline", description: "Last day to register your team." },
@@ -49,8 +54,10 @@ export function CaseCompetitionCard({
         targetDate={REGISTRATION_DEADLINE}
         imageUrl="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1200&q=80"
         imageAlt="Students presenting at a competition"
-        primaryAction={{ label: "Register Now", href: "https://docs.google.com/forms/d/e/1FAIpQLSdrmHCBq0MLWjcuCl84Hf0kQvrxZUhn2xWNRXCe4pdCqvQdaQ/viewform" }}
-        secondaryAction={{ label: "View Details", onClick: () => setOpen(true) }}      />
+        featuredAction={{ label: "Submission Form", href: SUBMISSION_FORM_URL }}
+        primaryAction={{ label: "Register Now", href: REGISTRATION_FORM_URL, closed: true }}
+        secondaryAction={{ label: "View Details", onClick: () => setOpen(true) }}
+      />
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="border-aimd-purple/40 bg-aimd-surface text-aimd-white sm:max-w-5xl p-6 md:p-10">

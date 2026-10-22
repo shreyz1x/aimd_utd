@@ -152,7 +152,8 @@ export interface EventCountdownCardProps {
   targetDate: Date
   imageUrl: string
   imageAlt?: string
-  primaryAction: { label: string; href: string }
+  primaryAction: { label: string; href: string; closed?: boolean }
+  featuredAction?: { label: string; href: string }
   secondaryAction?: { label: string; onClick: () => void }
   closedLabel?: string
   layout?: "stacked" | "wide"
@@ -173,6 +174,7 @@ export function EventCountdownCard({
   imageUrl,
   imageAlt = "",
   primaryAction,
+  featuredAction,
   secondaryAction,
   closedLabel = "Closed",
   layout = "stacked",
@@ -225,9 +227,31 @@ export function EventCountdownCard({
       </div>
 
       <div className={cn("mt-auto flex gap-3", wide ? "flex-col sm:flex-row" : "flex-col")}>
-        <a href={primaryAction.href} target="_blank" rel="noopener noreferrer" className={eventPrimaryButtonClass}>
-          {primaryAction.label}
-        </a>
+        {featuredAction && (
+          <a href={featuredAction.href} target="_blank" rel="noopener noreferrer" className={eventPrimaryButtonClass}>
+            {featuredAction.label}
+          </a>
+        )}
+        {primaryAction.closed ? (
+          <button
+            type="button"
+            disabled
+            aria-label={`${primaryAction.label} (closed)`}
+            className={cn(
+              buttonVariants({ variant: "outline", size: "lg" }),
+              "flex-1 cursor-not-allowed rounded-full border-white/10 bg-white/5 font-aileron uppercase tracking-wider text-aimd-white/50 disabled:opacity-60",
+            )}
+          >
+            <span className="line-through decoration-aimd-purple decoration-2">{primaryAction.label}</span>
+            <span className="rounded-full border border-aimd-purple/50 bg-aimd-purple/20 px-2 py-0.5 text-[10px] tracking-wider text-primary">
+              Closed
+            </span>
+          </button>
+        ) : (
+          <a href={primaryAction.href} target="_blank" rel="noopener noreferrer" className={eventPrimaryButtonClass}>
+            {primaryAction.label}
+          </a>
+        )}
         {secondaryAction && (
           <button type="button" onClick={secondaryAction.onClick} className={eventSecondaryButtonClass}>
             {secondaryAction.label}
