@@ -3,10 +3,7 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ArrowRight } from "lucide-react"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
-import { CaseCompetitionCard } from "@/components/case-competition-card"
-import { CaseRevealCard } from "@/components/case-reveal"
 import { cn } from "@/lib/utils"
-import { isCaseReleased } from "@/lib/case-competition"
 
 export const metadata: Metadata = {
   title: "Applications",
@@ -22,6 +19,7 @@ const applications = [
     description:
       "Companies and research organizations bring us real-world healthcare problems. Students can apply to join these projects and collaborate with industry partners to build AI solutions with real impact.",
     deliverables: ["Students", "Industry Partners", "Collaboration"],
+    startNote: "Starting Spring 2027",
   },
   {
     number: "02",
@@ -65,12 +63,6 @@ export default function ApplicationsPage() {
             </div>
           </div>
           <CarouselContent className="-ml-6">
-            <CarouselItem className="pl-6 md:basis-1/2 lg:basis-1/3">
-              <CaseCompetitionCard className="h-full" />
-            </CarouselItem>
-            <CarouselItem className="pl-6 md:basis-1/2 lg:basis-1/3">
-              <CaseRevealCard className="h-full" initialReleased={isCaseReleased()} />
-            </CarouselItem>
             {applications.map((application) => (
               <CarouselItem key={application.number} className="pl-6 md:basis-1/2 lg:basis-1/3">
                 <div
@@ -94,14 +86,21 @@ export default function ApplicationsPage() {
                       />
                     )}
                   </div>
-                  <h2
-                    className={cn(
-                      "font-aileron text-3xl md:text-4xl uppercase tracking-tight mt-8",
-                      application.closedNote && "line-through decoration-aimd-purple decoration-4 text-aimd-white/50",
+                  <div className="mt-8 flex flex-wrap items-center gap-3">
+                    <h2
+                      className={cn(
+                        "font-aileron text-3xl md:text-4xl uppercase tracking-tight",
+                        application.closedNote && "line-through decoration-aimd-purple decoration-4 text-aimd-white/50",
+                      )}
+                    >
+                      {application.title}
+                    </h2>
+                    {application.startNote && (
+                      <span className="rounded-full border border-aimd-purple/50 bg-aimd-purple/20 px-3 py-1 font-aileron text-[10px] uppercase tracking-wider text-primary">
+                        {application.startNote}
+                      </span>
                     )}
-                  >
-                    {application.title}
-                  </h2>
+                  </div>
                   {application.closedNote && (
                     <p className="font-aileron text-xs uppercase tracking-wider text-primary mt-3">
                       {application.closedNote}

@@ -90,7 +90,7 @@ export function EventCardShell({
   children,
 }: {
   layout?: "stacked" | "wide"
-  imageUrl: string
+  imageUrl?: string
   imageAlt?: string
   eyebrow?: string
   badge?: ReactNode
@@ -99,6 +99,35 @@ export function EventCardShell({
   children: ReactNode
 }) {
   const wide = layout === "wide"
+
+  if (!imageUrl) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className={cn(
+          "group relative flex flex-col gap-5 overflow-hidden rounded-3xl border border-aimd-purple/30 bg-aimd-surface text-aimd-white shadow-[0_30px_80px_-30px_rgba(151,21,169,0.6)] transition-colors hover:border-aimd-purple/60",
+          wide ? "p-6 md:p-10" : "p-6",
+          className,
+        )}
+      >
+        {overlay}
+        {(eyebrow || badge) && (
+          <div className="flex items-center justify-between gap-3">
+            {eyebrow && (
+              <span className="w-fit rounded-full border border-aimd-purple/50 bg-aimd-black/70 px-3 py-1 font-aileron text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
+                {eyebrow}
+              </span>
+            )}
+            {badge}
+          </div>
+        )}
+        {children}
+      </motion.div>
+    )
+  }
 
   return (
     <motion.div
