@@ -190,7 +190,21 @@ function TeamCard({ team, isOpen, onToggle }: { team: Team; isOpen: boolean; onT
 export function TeamSection() {
   const [selected, setSelected] = useState<string | null>(null)
   const panelRef = useRef<HTMLDivElement>(null)
+  const scrollBeforeOpen = useRef<number | null>(null)
   const active = teams.find((team) => team.name === selected)
+
+  const toggleTeam = (name: string) => {
+    if (selected === null) scrollBeforeOpen.current = window.scrollY
+    setSelected(name === selected ? null : name)
+  }
+
+  const closePanel = () => {
+    setSelected(null)
+    if (scrollBeforeOpen.current !== null) {
+      window.scrollTo({ top: scrollBeforeOpen.current, behavior: "smooth" })
+      scrollBeforeOpen.current = null
+    }
+  }
 
   useEffect(() => {
     if (active) {
@@ -213,7 +227,7 @@ export function TeamSection() {
             key={team.name}
             team={team}
             isOpen={team.name === selected}
-            onToggle={() => setSelected(team.name === selected ? null : team.name)}
+            onToggle={() => toggleTeam(team.name)}
           />
         ))}
       </div>
@@ -242,7 +256,7 @@ export function TeamSection() {
                 <button
                   type="button"
                   aria-label="Close team"
-                  onClick={() => setSelected(null)}
+                  onClick={closePanel}
                   className="shrink-0 rounded-full border border-white/15 p-2 transition-colors hover:bg-aimd-white hover:text-aimd-black"
                 >
                   <X size={20} />
