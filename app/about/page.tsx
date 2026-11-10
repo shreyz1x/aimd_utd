@@ -1,7 +1,8 @@
 import type { Metadata } from "next"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
-import { TeamGrid } from "@/components/team-grid"
+import { TeamSection } from "@/components/team-grid"
+import { AboutHero } from "@/components/about-hero"
 import { CircularCarousel } from "@/components/ui/circular-carousel"
 
 export const metadata: Metadata = {
@@ -55,13 +56,9 @@ export default function AboutPage() {
     <main className="min-h-screen bg-background">
       <Navbar />
 
-      <section className="pt-32 pb-16 px-4 md:px-8">
-        <h1 className="font-aileron text-[12vw] md:text-[8vw] leading-[0.85] uppercase tracking-tighter">
-          About <span className="text-primary">Us</span>
-        </h1>
-      </section>
+      <AboutHero />
 
-      <section className="px-4 md:px-8 pb-24">
+      <section className="px-4 md:px-8 pt-12 md:pt-16 pb-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
           <div>
             <p className="font-baskerville text-2xl md:text-4xl leading-tight">Transforming Healthcare with AI</p>
@@ -100,10 +97,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="px-4 md:px-8 pb-24">
-        <h2 className="font-aileron text-4xl md:text-6xl uppercase tracking-tight mb-12">The Team</h2>
-        <TeamGrid />
-      </section>
+      <TeamSection />
 
       <section className="px-4 md:px-8 pb-24">
         <div className="overflow-hidden rounded-3xl border border-aimd-purple/30 bg-[radial-gradient(ellipse_at_center,rgba(151,21,169,0.18),transparent_70%)] px-4 py-12 md:py-16">

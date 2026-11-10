@@ -83,6 +83,7 @@ export function EventCardShell({
   layout = "stacked",
   imageUrl,
   imageAlt = "",
+  imageClassName,
   eyebrow,
   badge,
   overlay,
@@ -92,6 +93,7 @@ export function EventCardShell({
   layout?: "stacked" | "wide"
   imageUrl?: string
   imageAlt?: string
+  imageClassName?: string
   eyebrow?: string
   badge?: ReactNode
   overlay?: ReactNode
@@ -142,7 +144,7 @@ export function EventCardShell({
       )}
     >
       {overlay}
-      <div className={cn("relative overflow-hidden", wide ? "h-56 md:h-auto md:w-[42%]" : "h-48")}>
+      <div className={cn("relative overflow-hidden", wide ? "h-56 md:h-auto md:w-[42%]" : "h-48", imageClassName)}>
         <img
           src={imageUrl}
           alt={imageAlt}
