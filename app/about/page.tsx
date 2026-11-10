@@ -3,6 +3,7 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { TeamSection } from "@/components/team-grid"
 import { AboutHero } from "@/components/about-hero"
+import { AboutIntro } from "@/components/about-intro"
 import { CircularCarousel } from "@/components/ui/circular-carousel"
 
 export const metadata: Metadata = {
@@ -58,44 +59,7 @@ export default function AboutPage() {
 
       <AboutHero />
 
-      <section className="px-4 md:px-8 pt-12 md:pt-16 pb-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-          <div>
-            <p className="font-baskerville text-2xl md:text-4xl leading-tight">Transforming Healthcare with AI</p>
-          </div>
-          <div className="space-y-6">
-            <p className="font-baskerville text-muted-foreground">
-              At AIMD at UT Dallas, we bring together students interested in artificial intelligence and healthcare to
-              work on hands-on projects, including industry-sponsored initiatives with real companies, tackling
-              real-world medical challenges through research, innovation, and collaboration.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="px-4 md:px-8 pb-24">
-        <h2 className="font-aileron text-4xl md:text-6xl uppercase tracking-tight mb-4">Proven Impact</h2>
-        <p className="font-baskerville text-primary text-xl md:text-2xl mb-12">Through Applied AI</p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-          <div className="border-2 border-border bg-card p-6 md:p-8">
-            <p className="font-baskerville text-muted-foreground">
-              Discover how AIMD empowers students to gain real-world experience at the intersection of artificial
-              intelligence and healthcare through hands-on projects, research, and industry collaboration, preparing
-              for careers in medicine, research, and industry.
-            </p>
-          </div>
-          <div className="border-2 border-border bg-card p-6 md:p-8">
-            <h3 className="font-aileron text-xl uppercase text-primary mb-4">
-              Industry-Sponsored & Real-World Projects
-            </h3>
-            <p className="font-baskerville text-muted-foreground">
-              AIMD partners with companies, research groups, and healthcare-focused organizations to offer
-              industry-sponsored projects where students work on real problems using AI and machine learning. These
-              projects expose members to real data, constraints, and workflows found in professional environments.
-            </p>
-          </div>
-        </div>
-      </section>
+      <AboutIntro />
 
       <TeamSection />
 

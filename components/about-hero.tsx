@@ -8,12 +8,12 @@ export function AboutHero() {
     <MotionConfig reducedMotion="user">
       <section className="relative h-[70svh] min-h-[460px] w-full overflow-hidden md:h-[85svh]">
         <motion.img
-          src="/team/group-executive.jpg"
-          alt="The AIMD at UT Dallas executive team"
+          src="/team/group-all.jpg"
+          alt="The full AIMD at UT Dallas officer team"
           initial={{ opacity: 0, scale: 1.06 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute inset-0 h-full w-full object-cover object-[center_35%]"
+          className="absolute inset-0 h-full w-full object-cover object-[center_30%]"
         />
         {/* Darkens the top for the navbar and dissolves the photo into the page background below. */}
         <div
@@ -36,7 +36,7 @@ export function AboutHero() {
           className="absolute inset-x-0 bottom-0 px-4 pb-6 md:px-8 md:pb-10"
         >
           <span className="inline-block rounded-full border border-aimd-purple/50 bg-aimd-black/70 px-3 py-1 font-aileron text-[10px] font-bold uppercase tracking-[0.2em] text-primary backdrop-blur-sm">
-            AIMD Executive Team
+            The AIMD Team
           </span>
           <h1 className="mt-4 font-aileron text-[12vw] md:text-[8vw] leading-[0.85] uppercase tracking-tighter">
             About <span className="text-primary">Us</span>

@@ -1,102 +1,99 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
-import { ChevronDown, Users, X } from "lucide-react"
+import { BadgeCheck, Users } from "lucide-react"
 
 import { EventCardShell, EventInfoRow, eventSecondaryButtonClass } from "@/components/ui/event-countdown-card"
 import { cn } from "@/lib/utils"
 
-type Person = { name: string; photo?: string }
+type Person = { name: string; photo?: string; role?: string }
 
-type Executive = Person & {
-  role: string
-  team?: { name: string; groupPhoto?: string; members: Person[] }
+type Team = {
+  name: string
+  groupPhoto: string
+  lead: Person & { role: string }
+  members: Person[]
 }
 
+const zaina = { name: "Zaina Ali", role: "President", photo: "/team/zaina-ali.jpg" }
+const srinidhi = { name: "Srinidhi Vanjinepalli", role: "Head of Operations", photo: "/team/srinidhi-vanjinepalli.jpg" }
+const aarya = { name: "Aarya Oswal", role: "Head of Marketing" }
+const akshith = { name: "Akshith Akula", role: "Head of Industry", photo: "/team/akshith-akula.jpg" }
+const jaden = { name: "Jaden Jovan", role: "Head of Technology" }
+const diya = { name: "Diya Mehta", role: "Treasurer", photo: "/team/diya-mehta.jpg" }
+
 // Photos live in /public/team. People without a photo yet show their initials until one is added.
-const executives: Executive[] = [
-  { name: "Zaina Ali", role: "President", photo: "/team/zaina-ali.jpg" },
-  { name: "Rakshitha Kishore", role: "Vice President", photo: "/team/rakshitha-kishore.jpg" },
+const teams: Team[] = [
   {
-    name: "Srinidhi Vanjinepalli",
-    role: "Head of Operations",
-    photo: "/team/srinidhi-vanjinepalli.jpg",
-    team: {
-      name: "Operations",
-      groupPhoto: "/team/group-operations.jpg",
-      members: [
-        { name: "Ishir Chandra", photo: "/team/ishir-chandra.jpg" },
-        { name: "Arya Gautam", photo: "/team/arya-gautam.jpg" },
-        { name: "Vedanshi Thakur", photo: "/team/vedanshi-thakur.jpg" },
-      ],
-    },
+    name: "Executive",
+    groupPhoto: "/team/group-executive.jpg",
+    lead: zaina,
+    members: [
+      { name: "Rakshitha Kishore", role: "Vice President", photo: "/team/rakshitha-kishore.jpg" },
+      srinidhi,
+      aarya,
+      akshith,
+      jaden,
+      { name: "Arnav Mehta", role: "Head of Engineering", photo: "/team/arnav-mehta.jpg" },
+      diya,
+    ],
   },
   {
-    name: "Aarya Oswal",
-    role: "Head of Marketing",
-    team: {
-      name: "Marketing",
-      groupPhoto: "/team/group-marketing.jpg",
-      members: [
-        { name: "Neha Ramkumar", photo: "/team/neha-ramkumar.jpg" },
-        { name: "Amulya Tirumala", photo: "/team/amulya-tirumala.jpg" },
-        { name: "Rohini Viswanatham", photo: "/team/rohini-viswanatham.jpg" },
-      ],
-    },
+    name: "Operations",
+    groupPhoto: "/team/group-operations.jpg",
+    lead: srinidhi,
+    members: [
+      { name: "Ishir Chandra", photo: "/team/ishir-chandra.jpg" },
+      { name: "Arya Gautam", photo: "/team/arya-gautam.jpg" },
+      { name: "Vedanshi Thakur", photo: "/team/vedanshi-thakur.jpg" },
+    ],
   },
   {
-    name: "Akshith Akula",
-    role: "Head of Industry",
-    photo: "/team/akshith-akula.jpg",
-    team: {
-      name: "Industry",
-      groupPhoto: "/team/group-industry.jpg",
-      members: [
-        { name: "Ishayu Gupta", photo: "/team/ishayu-gupta.jpg" },
-        { name: "Navya Seghal", photo: "/team/navya-seghal.jpg" },
-        { name: "Prajwal Dahal", photo: "/team/prajwal-dahal.jpg" },
-        { name: "Rasika Chaudhari", photo: "/team/rasika-chaudhari.jpg" },
-      ],
-    },
+    name: "Marketing",
+    groupPhoto: "/team/group-marketing.jpg",
+    lead: aarya,
+    members: [
+      { name: "Neha Ramkumar", photo: "/team/neha-ramkumar.jpg" },
+      { name: "Amulya Tirumala", photo: "/team/amulya-tirumala.jpg" },
+      { name: "Rohini Viswanatham", photo: "/team/rohini-viswanatham.jpg" },
+    ],
   },
   {
-    name: "Jaden Jovan",
-    role: "Head of Technology",
-    team: {
-      name: "Tech",
-      groupPhoto: "/team/group-tech.jpg",
-      members: [
-        { name: "Harsh Patel", photo: "/team/harsh-patel.jpg" },
-        { name: "Shreyas Jena", photo: "/team/shreyas-jena.jpg" },
-        { name: "Chris Abraham", photo: "/team/chris-abraham.jpg" },
-        { name: "Sarim Shaikh", photo: "/team/sarim-shaikh.jpg" },
-        { name: "Rayan Sikkandar" },
-        { name: "Krisha Nashte", photo: "/team/krisha-nashte.jpg" },
-        { name: "Sourish Pasula" },
-      ],
-    },
+    name: "Industry",
+    groupPhoto: "/team/group-industry.jpg",
+    lead: akshith,
+    members: [
+      { name: "Ishayu Gupta", photo: "/team/ishayu-gupta.jpg" },
+      { name: "Navya Seghal", photo: "/team/navya-seghal.jpg" },
+      { name: "Prajwal Dahal", photo: "/team/prajwal-dahal.jpg" },
+      { name: "Rasika Chaudhari", photo: "/team/rasika-chaudhari.jpg" },
+      { name: "Krisha Nashte", photo: "/team/krisha-nashte.jpg" },
+    ],
   },
-  { name: "Arnav Mehta", role: "Head of Engineering", photo: "/team/arnav-mehta.jpg" },
   {
-    name: "Diya Mehta",
-    role: "Treasurer",
-    photo: "/team/diya-mehta.jpg",
-    team: {
-      name: "Finance",
-      groupPhoto: "/team/group-finance.jpg",
-      members: [
-        { name: "Reuel Joseph", photo: "/team/reuel-joseph.jpg" },
-        { name: "Runi Patel", photo: "/team/runi-patel.jpg" },
-      ],
-    },
+    name: "Tech",
+    groupPhoto: "/team/group-tech.jpg",
+    lead: jaden,
+    members: [
+      { name: "Harsh Patel", photo: "/team/harsh-patel.jpg" },
+      { name: "Shreyas Jena", photo: "/team/shreyas-jena.jpg" },
+      { name: "Chris Abraham", photo: "/team/chris-abraham.jpg" },
+      { name: "Sarim Shaikh", photo: "/team/sarim-shaikh.jpg" },
+      { name: "Rayan Sikkandar" },
+      { name: "Sourish Pasula" },
+    ],
+  },
+  {
+    name: "Finance",
+    groupPhoto: "/team/group-finance.jpg",
+    lead: diya,
+    members: [
+      { name: "Reuel Joseph", photo: "/team/reuel-joseph.jpg" },
+      { name: "Runi Patel", photo: "/team/runi-patel.jpg" },
+    ],
   },
 ]
-
-const teamLeads = executives.filter((executive) => executive.team)
-
-// Five team cards: three across on top, two wider ones below on large screens.
-const teamCardSpan = ["lg:col-span-2", "lg:col-span-2", "lg:col-span-2", "lg:col-span-3", "md:col-span-2 lg:col-span-3"]
 
 function initials(name: string) {
   return name
@@ -113,22 +110,24 @@ function PersonPhoto({ person, className }: { person: Person; className?: string
           src={person.photo}
           alt={person.name}
           loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover object-[center_30%] transition-transform duration-700 group-hover:scale-105"
+          className="absolute inset-0 h-full w-full object-cover object-[center_30%] transition-transform duration-700 group-hover/person:scale-105"
         />
       ) : (
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[radial-gradient(ellipse_at_center,rgba(151,21,169,0.28),transparent_70%)]">
-          <span className="font-aileron text-4xl font-black text-primary md:text-5xl">{initials(person.name)}</span>
-          <span className="font-aileron text-[10px] uppercase tracking-[0.2em] text-white/35">Photo coming soon</span>
+          <span className="font-aileron text-3xl font-black text-primary">{initials(person.name)}</span>
+          <span className="px-2 text-center font-aileron text-[8px] uppercase tracking-[0.2em] text-white/35">Photo coming soon</span>
         </div>
       )}
     </div>
   )
 }
 
-function AvatarStack({ people }: { people: Person[] }) {
+function AvatarStack({ people, max = 5 }: { people: Person[]; max?: number }) {
+  const hidden = people.length - max
+
   return (
     <div className="flex -space-x-2">
-      {people.map((person) => (
+      {people.slice(0, max).map((person) => (
         <span
           key={person.name}
           title={person.name}
@@ -141,191 +140,134 @@ function AvatarStack({ people }: { people: Person[] }) {
           )}
         </span>
       ))}
+      {hidden > 0 && (
+        <span className="relative flex size-9 items-center justify-center rounded-full bg-aimd-purple/30 font-aileron text-[11px] font-bold text-aimd-white ring-2 ring-aimd-surface">
+          +{hidden}
+        </span>
+      )}
     </div>
   )
 }
 
-const fadeUp = {
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.2 },
+function useColumnCount() {
+  const [count, setCount] = useState(3)
+
+  useEffect(() => {
+    const lg = window.matchMedia("(min-width: 1024px)")
+    const md = window.matchMedia("(min-width: 768px)")
+    const update = () => setCount(lg.matches ? 3 : md.matches ? 2 : 1)
+    update()
+    lg.addEventListener("change", update)
+    md.addEventListener("change", update)
+    return () => {
+      lg.removeEventListener("change", update)
+      md.removeEventListener("change", update)
+    }
+  }, [])
+
+  return count
+}
+
+function TeamCard({ team, isOpen, onToggle }: { team: Team; isOpen: boolean; onToggle: () => void }) {
+  const people = [team.lead, ...team.members]
+
+  return (
+    <EventCardShell
+      imageUrl={team.groupPhoto}
+      imageAlt={`AIMD ${team.name} team`}
+      imageClassName="h-auto aspect-[3/2]"
+      eyebrow={`${team.name} Team`}
+      className={cn(isOpen && "border-aimd-purple ring-2 ring-aimd-purple/60")}
+    >
+      <div>
+        <p className="font-baskerville text-sm italic text-primary">Led by {team.lead.name}</p>
+        <h3 className="mt-2 font-aileron text-2xl md:text-3xl font-black uppercase leading-[0.95] tracking-tight">
+          {team.name}
+        </h3>
+      </div>
+      <div className="flex flex-col gap-2 font-baskerville text-sm text-white/70">
+        <EventInfoRow icon={Users}>{people.length} members</EventInfoRow>
+        <EventInfoRow icon={BadgeCheck}>{team.lead.role}</EventInfoRow>
+      </div>
+      <div className="@container mt-auto">
+        <div className="flex flex-col items-start gap-4 @sm:flex-row @sm:items-center @sm:justify-between">
+          <AvatarStack people={people} />
+          <button
+            type="button"
+            aria-expanded={isOpen}
+            onClick={onToggle}
+            className={cn(eventSecondaryButtonClass, "flex-none px-6")}
+          >
+            {isOpen ? "Hide team" : "Meet the team"}
+          </button>
+        </div>
+      </div>
+
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            key="members"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="@container overflow-hidden"
+          >
+            <div className="grid grid-cols-2 gap-3 border-t border-white/10 pt-6 @sm:grid-cols-3">
+              {people.map((person) => (
+                <div
+                  key={person.name}
+                  className="group/person flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-aimd-black/60 transition-colors hover:border-aimd-purple/50"
+                >
+                  <PersonPhoto person={person} className="aspect-[4/5]" />
+                  <div className="p-3">
+                    <p className="font-aileron text-[8px] font-bold uppercase leading-snug tracking-[0.15em] text-primary">
+                      {person.role ?? team.name}
+                    </p>
+                    <p className="mt-1 font-aileron text-xs font-bold uppercase leading-tight text-aimd-white">
+                      {person.name}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </EventCardShell>
+  )
 }
 
 export function TeamSection() {
   const [selected, setSelected] = useState<string | null>(null)
-  const panelRef = useRef<HTMLDivElement>(null)
-  const active = executives.find((executive) => executive.name === selected)
-
-  useEffect(() => {
-    if (active) {
-      panelRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" })
-    }
-  }, [active])
+  const columnCount = useColumnCount()
+  const columns = Array.from({ length: columnCount }, (_, column) =>
+    teams.filter((_, index) => index % columnCount === column),
+  )
 
   return (
-    <>
-      <section className="px-4 md:px-8 pb-24">
-        <h2 className="font-aileron text-4xl md:text-6xl font-black uppercase tracking-tight">
-          Our <span className="text-primary">Teams</span>
-        </h2>
-        <p className="font-baskerville text-muted-foreground mt-4 mb-12 max-w-xl">
-          The groups that keep AIMD running, from events and outreach to partnerships, engineering, and finance.
-        </p>
+    <section className="px-4 md:px-8 pb-24">
+      <h2 className="font-aileron text-4xl md:text-6xl font-black uppercase tracking-tight">
+        The <span className="text-primary">Team</span>
+      </h2>
+      <p className="font-baskerville text-muted-foreground mt-4 mb-12 max-w-xl">
+        The groups that keep AIMD running, from events and outreach to partnerships, engineering, and finance.
+      </p>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-6">
-          {teamLeads.map((lead, index) => {
-            const team = lead.team!
-            return (
-              <EventCardShell
+      <div className="flex items-start gap-6">
+        {columns.map((column, index) => (
+          <div key={index} className="flex min-w-0 flex-1 flex-col gap-6">
+            {column.map((team) => (
+              <TeamCard
                 key={team.name}
-                imageUrl={team.groupPhoto}
-                imageAlt={`AIMD ${team.name} team`}
-                imageClassName="h-auto aspect-[3/2]"
-                eyebrow={`${team.name} Team`}
-                className={teamCardSpan[index]}
-              >
-                <div>
-                  <p className="font-baskerville text-sm italic text-primary">Led by {lead.name}</p>
-                  <h3 className="mt-2 font-aileron text-2xl md:text-3xl font-black uppercase leading-[0.95] tracking-tight">
-                    {team.name}
-                  </h3>
-                </div>
-                <div className="flex flex-col gap-2 font-baskerville text-sm text-white/70">
-                  <EventInfoRow icon={Users}>
-                    {team.members.length + 1} members · {lead.role}
-                  </EventInfoRow>
-                </div>
-                <div className="mt-auto flex flex-wrap items-center justify-between gap-4">
-                  <AvatarStack people={[lead, ...team.members]} />
-                  <button
-                    type="button"
-                    onClick={() => setSelected(lead.name)}
-                    className={cn(eventSecondaryButtonClass, "flex-none px-6")}
-                  >
-                    Meet the team
-                  </button>
-                </div>
-              </EventCardShell>
-            )
-          })}
-        </div>
-      </section>
-
-      <section className="px-4 md:px-8 pb-24">
-        <h2 className="font-aileron text-4xl md:text-6xl font-black uppercase tracking-tight mb-12">
-          The <span className="text-primary">Team</span>
-        </h2>
-
-        <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
-          {executives.map((executive) => {
-            const isOpen = executive.name === selected
-            const team = executive.team
-
-            const body = (
-              <>
-                <PersonPhoto person={executive} className="aspect-[4/5]" />
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-aimd-surface via-aimd-surface/70 to-transparent"
-                />
-                <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1 p-4 md:p-6">
-                  <p className="font-aileron text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
-                    {executive.role}
-                  </p>
-                  <h3 className="font-aileron text-base md:text-2xl font-black uppercase leading-[0.95] tracking-tight text-aimd-white">
-                    {executive.name}
-                  </h3>
-                  {team && (
-                    <span className="mt-3 inline-flex w-fit items-center gap-1.5 rounded-full border border-aimd-purple/50 bg-aimd-black/60 px-3 py-1.5 font-aileron text-[9px] md:text-[11px] uppercase tracking-wider text-aimd-white backdrop-blur-sm transition-colors group-hover:bg-aimd-purple/30">
-                      {isOpen ? "Hide team" : `View ${team.name} team`}
-                      <ChevronDown
-                        className={cn("size-3 md:size-3.5 transition-transform", isOpen && "rotate-180")}
-                        aria-hidden
-                      />
-                    </span>
-                  )}
-                </div>
-              </>
-            )
-
-            const cardClass = cn(
-              "group relative overflow-hidden rounded-3xl border bg-aimd-surface text-left shadow-[0_30px_80px_-30px_rgba(151,21,169,0.6)] transition-colors",
-              isOpen ? "border-aimd-purple ring-2 ring-aimd-purple/60" : "border-aimd-purple/30 hover:border-aimd-purple/60",
-            )
-
-            return (
-              <motion.div key={executive.name} {...fadeUp} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
-                {team ? (
-                  <button
-                    type="button"
-                    aria-expanded={isOpen}
-                    onClick={() => setSelected(isOpen ? null : executive.name)}
-                    className={cn(cardClass, "block w-full")}
-                  >
-                    {body}
-                  </button>
-                ) : (
-                  <div className={cardClass}>{body}</div>
-                )}
-              </motion.div>
-            )
-          })}
-        </div>
-
-        <div ref={panelRef} className="scroll-mt-28">
-          <AnimatePresence mode="wait">
-            {active?.team && (
-              <motion.div
-                key={active.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="mt-10 rounded-3xl border border-aimd-purple/40 bg-aimd-surface p-6 shadow-[0_30px_80px_-30px_rgba(151,21,169,0.6)] md:p-10"
-              >
-                <div className="mb-8 flex items-start justify-between gap-4">
-                  <div>
-                    <span className="inline-block rounded-full border border-aimd-purple/50 bg-aimd-black/70 px-3 py-1 font-aileron text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
-                      {active.team.name} Team
-                    </span>
-                    <h3 className="mt-4 font-aileron text-3xl md:text-5xl font-black uppercase leading-[0.95] tracking-tight">
-                      Meet the <span className="text-primary">{active.team.name}</span> team
-                    </h3>
-                    <p className="mt-2 font-baskerville text-sm italic text-primary">Led by {active.name}</p>
-                  </div>
-                  <button
-                    type="button"
-                    aria-label="Close team"
-                    onClick={() => setSelected(null)}
-                    className="shrink-0 rounded-full border border-white/15 p-2 transition-colors hover:bg-aimd-white hover:text-aimd-black"
-                  >
-                    <X size={20} />
-                  </button>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4 xl:grid-cols-6">
-                  {active.team.members.map((member) => (
-                    <div
-                      key={member.name}
-                      className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-aimd-black/60 transition-colors hover:border-aimd-purple/50"
-                    >
-                      <PersonPhoto person={member} className="aspect-[4/5]" />
-                      <div className="p-4">
-                        <p className="font-aileron text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
-                          {active.team?.name}
-                        </p>
-                        <p className="mt-1 font-aileron text-sm md:text-base font-bold uppercase leading-tight text-aimd-white">
-                          {member.name}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </section>
-    </>
+                team={team}
+                isOpen={team.name === selected}
+                onToggle={() => setSelected(team.name === selected ? null : team.name)}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+    </section>
   )
 }
