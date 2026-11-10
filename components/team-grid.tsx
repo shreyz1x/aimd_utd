@@ -1,8 +1,8 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
-import { BadgeCheck, Users } from "lucide-react"
+import { BadgeCheck, Users, X } from "lucide-react"
 
 import { EventCardShell, EventInfoRow, eventSecondaryButtonClass } from "@/components/ui/event-countdown-card"
 import { cn } from "@/lib/utils"
@@ -149,25 +149,6 @@ function AvatarStack({ people, max = 5 }: { people: Person[]; max?: number }) {
   )
 }
 
-function useColumnCount() {
-  const [count, setCount] = useState(3)
-
-  useEffect(() => {
-    const lg = window.matchMedia("(min-width: 1024px)")
-    const md = window.matchMedia("(min-width: 768px)")
-    const update = () => setCount(lg.matches ? 3 : md.matches ? 2 : 1)
-    update()
-    lg.addEventListener("change", update)
-    md.addEventListener("change", update)
-    return () => {
-      lg.removeEventListener("change", update)
-      md.removeEventListener("change", update)
-    }
-  }, [])
-
-  return count
-}
-
 function TeamCard({ team, isOpen, onToggle }: { team: Team; isOpen: boolean; onToggle: () => void }) {
   const people = [team.lead, ...team.members]
 
@@ -202,48 +183,20 @@ function TeamCard({ team, isOpen, onToggle }: { team: Team; isOpen: boolean; onT
           </button>
         </div>
       </div>
-
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            key="members"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="@container overflow-hidden"
-          >
-            <div className="grid grid-cols-2 gap-3 border-t border-white/10 pt-6 @sm:grid-cols-3">
-              {people.map((person) => (
-                <div
-                  key={person.name}
-                  className="group/person flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-aimd-black/60 transition-colors hover:border-aimd-purple/50"
-                >
-                  <PersonPhoto person={person} className="aspect-[4/5]" />
-                  <div className="p-3">
-                    <p className="font-aileron text-[8px] font-bold uppercase leading-snug tracking-[0.15em] text-primary">
-                      {person.role ?? team.name}
-                    </p>
-                    <p className="mt-1 font-aileron text-xs font-bold uppercase leading-tight text-aimd-white">
-                      {person.name}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </EventCardShell>
   )
 }
 
 export function TeamSection() {
   const [selected, setSelected] = useState<string | null>(null)
-  const columnCount = useColumnCount()
-  const columns = Array.from({ length: columnCount }, (_, column) =>
-    teams.filter((_, index) => index % columnCount === column),
-  )
+  const panelRef = useRef<HTMLDivElement>(null)
+  const active = teams.find((team) => team.name === selected)
+
+  useEffect(() => {
+    if (active) {
+      panelRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" })
+    }
+  }, [active])
 
   return (
     <section className="px-4 md:px-8 pb-24">
@@ -254,19 +207,69 @@ export function TeamSection() {
         The groups that keep AIMD running, from events and outreach to partnerships, engineering, and finance.
       </p>
 
-      <div className="flex items-start gap-6">
-        {columns.map((column, index) => (
-          <div key={index} className="flex min-w-0 flex-1 flex-col gap-6">
-            {column.map((team) => (
-              <TeamCard
-                key={team.name}
-                team={team}
-                isOpen={team.name === selected}
-                onToggle={() => setSelected(team.name === selected ? null : team.name)}
-              />
-            ))}
-          </div>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {teams.map((team) => (
+          <TeamCard
+            key={team.name}
+            team={team}
+            isOpen={team.name === selected}
+            onToggle={() => setSelected(team.name === selected ? null : team.name)}
+          />
         ))}
+      </div>
+
+      <div ref={panelRef} className="scroll-mt-28">
+        <AnimatePresence mode="wait">
+          {active && (
+            <motion.div
+              key={active.name}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="mt-10 rounded-3xl border border-aimd-purple/40 bg-aimd-surface p-6 shadow-[0_30px_80px_-30px_rgba(151,21,169,0.6)] md:p-10"
+            >
+              <div className="mb-8 flex items-start justify-between gap-4">
+                <div>
+                  <span className="inline-block rounded-full border border-aimd-purple/50 bg-aimd-black/70 px-3 py-1 font-aileron text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
+                    {active.name} Team
+                  </span>
+                  <h3 className="mt-4 font-aileron text-3xl md:text-5xl font-black uppercase leading-[0.95] tracking-tight">
+                    Meet the <span className="text-primary">{active.name}</span> team
+                  </h3>
+                  <p className="mt-2 font-baskerville text-sm italic text-primary">Led by {active.lead.name}</p>
+                </div>
+                <button
+                  type="button"
+                  aria-label="Close team"
+                  onClick={() => setSelected(null)}
+                  className="shrink-0 rounded-full border border-white/15 p-2 transition-colors hover:bg-aimd-white hover:text-aimd-black"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
+                {[active.lead, ...active.members].map((member) => (
+                  <div
+                    key={member.name}
+                    className="group/person flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-aimd-black/60 transition-colors hover:border-aimd-purple/50"
+                  >
+                    <PersonPhoto person={member} className="aspect-[4/5]" />
+                    <div className="p-4">
+                      <p className="font-aileron text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
+                        {member.role ?? active.name}
+                      </p>
+                      <p className="mt-1 font-aileron text-sm md:text-base font-bold uppercase leading-tight text-aimd-white">
+                        {member.name}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   )
