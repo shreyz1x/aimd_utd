@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/applications" },
 }
 
+const APPLY_FORM_URL =
+  "https://docs.google.com/forms/d/1BuqlhREemsC7zIyRPGiUUOTe4VHdqHY-0Iuc4GUDnmg/viewform?edit_requested=true"
+
 const applications = [
   {
     number: "01",
@@ -19,7 +22,7 @@ const applications = [
     description:
       "Companies and research organizations bring us real-world healthcare problems. Students can apply to join these projects and collaborate with industry partners to build AI solutions with real impact.",
     deliverables: ["Students", "Industry Partners", "Collaboration"],
-    startNote: "Starting Spring 2027",
+    href: APPLY_FORM_URL,
   },
   {
     number: "02",
@@ -63,16 +66,15 @@ export default function ApplicationsPage() {
             </div>
           </div>
           <CarouselContent className="-ml-6">
-            {applications.map((application) => (
-              <CarouselItem key={application.number} className="pl-6 md:basis-1/2 lg:basis-1/3">
-                <div
-                  className={cn(
-                    "group flex h-full flex-col rounded-2xl border border-white/10 bg-card p-6 md:p-8 transition-colors",
-                    application.closedNote
-                      ? "opacity-60"
-                      : "hover:border-aimd-purple/60 hover:shadow-[0_20px_60px_-20px_rgba(151,21,169,0.6)]",
-                  )}
-                >
+            {applications.map((application) => {
+              const cardClass = cn(
+                "group flex h-full flex-col rounded-2xl border border-white/10 bg-card p-6 md:p-8 transition-colors",
+                application.closedNote
+                  ? "opacity-60"
+                  : "hover:border-aimd-purple/60 hover:shadow-[0_20px_60px_-20px_rgba(151,21,169,0.6)]",
+              )
+              const body = (
+                <>
                   <div className="flex items-center justify-between">
                     <span className="font-baskerville text-primary text-sm">{application.number}</span>
                     {application.closedNote ? (
@@ -95,11 +97,6 @@ export default function ApplicationsPage() {
                     >
                       {application.title}
                     </h2>
-                    {application.startNote && (
-                      <span className="rounded-full border border-aimd-purple/50 bg-aimd-purple/20 px-3 py-1 font-aileron text-[10px] uppercase tracking-wider text-primary">
-                        {application.startNote}
-                      </span>
-                    )}
                   </div>
                   {application.closedNote && (
                     <p className="font-aileron text-xs uppercase tracking-wider text-primary mt-3">
@@ -117,9 +114,26 @@ export default function ApplicationsPage() {
                       </span>
                     ))}
                   </div>
-                </div>
-              </CarouselItem>
-            ))}
+                </>
+              )
+
+              return (
+                <CarouselItem key={application.number} className="pl-6 md:basis-1/2 lg:basis-1/3">
+                  {application.href ? (
+                    <a
+                      href={application.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(cardClass, "no-underline")}
+                    >
+                      {body}
+                    </a>
+                  ) : (
+                    <div className={cardClass}>{body}</div>
+                  )}
+                </CarouselItem>
+              )
+            })}
           </CarouselContent>
         </Carousel>
       </section>
